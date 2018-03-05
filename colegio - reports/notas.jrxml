@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="notas" pageWidth="595" pageHeight="45" columnWidth="585" leftMargin="5" rightMargin="5" topMargin="5" bottomMargin="5" uuid="e2c882ac-96f1-435d-8661-54d0d455600b">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MySQL"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<style name="color de fondo" backcolor="rgba(212, 145, 51, 0.39215687)">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{nota}<5]]></conditionExpression>
+			<style backcolor="rgba(245, 6, 2, 0.39215687)"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{nota}>7]]></conditionExpression>
+			<style backcolor="rgba(0, 235, 43, 0.39215687)"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="idAlumno" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[select nota, a.nombre as nombreAsig, p.nombre as nombreProfe from 
+	centroEstudios.alumnos_asignaturas as aa, 
+	centroEstudios.asignaturas as a, 
+	centroEstudios.profesores as p
+where
+	aa.asignaturas_idasignatura = a.idasignatura and
+	a.profesores_idprofesor = p.idprofesore and 
+    aa.alumnos_idalumno = $P{idAlumno}]]>
+	</queryString>
+	<field name="nota" class="java.lang.Float">
+		<property name="com.jaspersoft.studio.field.label" value="nota"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="alumnos_asignaturas"/>
+	</field>
+	<field name="nombreAsig" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nombreAsig"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="asignaturas"/>
+	</field>
+	<field name="nombreProfe" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nombreProfe"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="profesores"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="35" splitType="Stretch">
+			<rectangle>
+				<reportElement style="color de fondo" x="0" y="0" width="530" height="35" uuid="5e2976e6-d3e8-4584-9546-6869565d0f97"/>
+			</rectangle>
+			<textField>
+				<reportElement x="0" y="0" width="100" height="30" uuid="c2a7ef35-32d3-44d7-a33e-0d764995140d"/>
+				<textFieldExpression><![CDATA[$F{nombreAsig}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="100" height="30" uuid="e67c41e0-d8c0-463f-a247-adb7baac4a4b"/>
+				<textFieldExpression><![CDATA[$F{nota}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="0" width="100" height="30" uuid="4b9a17da-48a7-464f-975d-aeb7bd972c83"/>
+				<textFieldExpression><![CDATA[$F{nombreProfe}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
